@@ -2,8 +2,8 @@
 // @name         Universal Visited Link Sync & Highlighter
 // @namespace    GlobalHistory
 // @version      8.1
-// @description  Markiert extern und intern besuchte Links auf JEDER Website lokal
-// @author       Dein Name
+// @description  Locally marks external and internal links visited on ANY website.
+// @author       ms6666
 // @license      MIT
 // @match        *://*/*
 // @grant        GM_getValue
@@ -35,10 +35,10 @@
         return GM_getValue('v_' + cleaned, 0) === 1 || GM_getValue('v_' + url, 0) === 1;
     }
 
-    // 1. Jede aktuell aufgerufene Seite sofort speichern
+    // 1. Immediately save every page currently being viewed
     saveUrl(window.location.href);
 
-    // 2. CSS-Styling für alle Websites injizieren
+    // 2. Inject CSS styling for all websites
     function injectCSS() {
         if (document.getElementById('universal-visited-style')) return;
         const style = document.createElement('style');
@@ -55,7 +55,7 @@
         (document.head || document.documentElement).appendChild(style);
     }
 
-    // 3. Links auf der aktuellen Seite abgleichen
+    // 3. Compare links on the current page
     function markVisitedLinks() {
         const unvisitedLinks = document.querySelectorAll('a[href]:not(.custom-visited)');
         if (unvisitedLinks.length === 0) return;
@@ -77,12 +77,12 @@
         }
     }
 
-    // Interaktionen direkt erfassen
+    // Capture interactions directly
     window.addEventListener('click', handleLinkInteraction, true);
     window.addEventListener('auxclick', handleLinkInteraction, true);
     window.addEventListener('contextmenu', handleLinkInteraction, true);
 
-    // Synchronisation bei Tab-Wechsel & Fokus
+    // Synchronization on tab switch & focus
     window.addEventListener('focus', markVisitedLinks);
     window.addEventListener('visibilitychange', () => {
         if (!document.hidden) markVisitedLinks();
